@@ -11,7 +11,7 @@ class Task(Base):
     __tablename__ = "tasks"
 
     id = Column("id", Integer, primary_key=True, index=True, autoincrement=True)
-    title = Column("title", String, nullable=False, max_length=100)
-    description = Column("description", String, nullable=True, max_length=500)
+    title = Column("title", String(100), nullable=False)
+    description = Column("description", String(500), nullable=True)
     completed = Column("completed", Boolean, nullable=False, default=False)
     created_at = Column("created_at", DateTime, nullable=False, server_default=func.now())
