@@ -9,8 +9,11 @@ host = "to_do_db"
 port = 5435
 db_name = "todo"
 
+# Create SQLAlchemy URL
+SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
+
 # Create the database connection
-engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db_name}")
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
