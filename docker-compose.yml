@@ -8,13 +8,13 @@ services:
     restart: always
     ports:
       - "8001:8001"
+    depends_on:
+      - db
+    networks:
+      - app-network
 
     volumes:
       - ./backend:/app
-
-    depends_on:
-      db:
-        condition: service_healthy
 
   db:
     image: postgres
@@ -24,17 +24,17 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: todo
+      POSTGRES_PORT: 5435
     ports:
-      - "5435:5435"
+      - "5435:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
-    healthcheck:
-      test: [
-        "CMD-SHELL",
-        "PGPASSWORD=admin pg_isready -U admin -d todo -h 127.0.0.1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+networks:
+  app-network:
+    driver: bridge
+
 volumes:
   postgres_data:
