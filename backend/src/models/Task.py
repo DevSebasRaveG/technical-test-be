@@ -1,0 +1,17 @@
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
+
+from ..config.database import Base
+
+class Task(Base):
+    '''
+    Task model using SQLAlchemy ORM.
+    This model is going to be converted into a table in the database.
+    '''
+
+    __tablename__ = "tasks"
+
+    id = Column("id", Integer, primary_key=True, index=True, autoincrement=True)
+    title = Column("title", String, nullable=False, max_length=100)
+    description = Column("description", String, nullable=True, max_length=500)
+    completed = Column("completed", Boolean, nullable=False, default=False)
+    created_at = Column("created_at", DateTime, nullable=False, server_default=func.now())

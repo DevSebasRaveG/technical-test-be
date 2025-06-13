@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+
+    container_name: to-do
+    restart: always
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    container_name: to_do_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "PGPASSWORD=admin pg_isready -U admin -d todo -h 127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  postgres_data:
