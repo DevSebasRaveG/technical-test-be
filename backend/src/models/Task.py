@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 
-from ..config.database import Base
+from . import Base
 
 class Task(Base):
     '''
