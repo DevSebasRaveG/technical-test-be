@@ -7,11 +7,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install alembic
 
 COPY . .
+COPY .env .env
 
 # Initialize alembic if it doesn't exist
 RUN if [ ! -d "alembic" ]; then \
     alembic init alembic && \
-    sed -i 's|sqlalchemy.url = driver://user:pass@localhost/dbname|sqlalchemy.url = postgresql://admin:admin@192.168.20.35:5435/todo|' alembic.ini && \
     echo 'from src.models import Base\n\ntarget_metadata = Base.metadata' > alembic/env.py; \
     fi
 
