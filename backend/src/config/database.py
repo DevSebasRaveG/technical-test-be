@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 user = "admin"
 password = "admin"
 host = "to-do_db"
-port = 5432
+port = 5435
 db_name = "todo"
 
 # Create the database connection
